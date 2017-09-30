@@ -6,31 +6,22 @@ import Card from "grommet/components/Card";
 import Anchor from "grommet/components/Anchor";
 import Label from "grommet/components/Label";
 import Post from "./Post";
+import Api from "../../api/Api";
 
 export default class Posts extends React.PureComponent {
-  render() {
-    const posts = [
-      {
-        content: "Content",
-        user: "Josh",
-        tags: "tag1, tag2",
-        link: "https://www.dailydrip.com"
-      },
-      {
-        content: "Content",
-        user: "Josh",
-        tags: "tag1, tag2",
-        link: "https://www.dailydrip.com"
-      },
-      {
-        content: "Content",
-        user: "Josh",
-        tags: "tag1, tag2",
-        link: "https://www.dailydrip.com"
-      }
-    ];
+  constructor() {
+    super();
+    this.state = { posts: [] };
+  }
 
-    const renderPosts = posts.map((post, i) => {
+  componentDidMount() {
+    Api.getPosts().then(response => {
+      const posts = response.data;
+      this.setState({ posts: posts });
+    });
+  }
+  render() {
+    const renderPosts = this.state.posts.map((post, i) => {
       let colorIndex;
 
       if (i % 2 == 0) {
@@ -39,7 +30,7 @@ export default class Posts extends React.PureComponent {
         colorIndex = "grey-3";
       }
 
-      return <Post post={post} colorIndex={colorIndex} />;
+      return <Post key={i} post={post} colorIndex={colorIndex} />;
     });
     return <div>{renderPosts}</div>;
   }
