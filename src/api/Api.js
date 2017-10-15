@@ -1,6 +1,6 @@
 import apisauce from "apisauce";
 
-const BASE_URL = "http://0.0.0.0:4000/api/";
+const BASE_URL = "http://phoenix-slack-posting.dailydrip.com/api";
 const postsUrl = () => `${BASE_URL}/posts`;
 
 const rawInstance = apisauce.create({
